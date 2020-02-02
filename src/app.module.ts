@@ -6,6 +6,7 @@ import { Sequelize } from 'sequelize-typescript';
 import { Flat } from './model/Flat';
 import * as sequelizeStream from 'node-sequelize-stream';
 const sequelize =  new Sequelize({
+  host: '192.168.2.100',
   database: 'postgres',
   dialect: 'postgres',
   username: 'postgres',
