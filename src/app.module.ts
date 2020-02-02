@@ -10,9 +10,12 @@ const sequelize =  new Sequelize({
   dialect: 'postgres',
   username: 'postgres',
   password: 'postgres',
+  define: {
+    timestamps: false,
+  },
 });
 sequelize.addModels([Flat]);
-sequelizeStream(sequelize, 500);
+sequelizeStream(sequelize, 1500);
 sequelize.sync();
 
 @Module({

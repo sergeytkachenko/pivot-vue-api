@@ -1,10 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { Flat } from './model/Flat';
 import random from './random';
+import { Op } from 'sequelize';
 import { Sequelize } from 'sequelize-typescript';
 
 @Injectable()
 export class AppService {
+
+  private MAX_COUNT: number = 200 * 1000;
 
   private sequelize: Sequelize;
 
@@ -53,11 +56,11 @@ export class AppService {
 
   async getStreamData(response: Response) {
     // @ts-ignore
-    const stream = this.sequelize.models.Flat.findAllWithStream();
+    const stream = this.sequelize.models.Flat.findAllWithStream({where: {id: {[Op.lte]: this.MAX_COUNT }}});
     stream.pipe(response);
   }
 
   async getDataCount(): Promise<number> {
-    return Flat.count();
+    return this.MAX_COUNT;
   }
 }
